@@ -277,6 +277,9 @@ $equipos = $resultado->fetch_all(MYSQLI_ASSOC);
             </div>
         </nav>
         <!-- End Navbar -->
+
+
+        
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
@@ -343,11 +346,13 @@ $equipos = $resultado->fetch_all(MYSQLI_ASSOC);
                                                     <option value="0">Seleccione colaborador</option>
                                                     <?php
           $query = $mysqli -> query ("select * from colaborador where equipo_entregado <>1 ");
+          
           while ($valores = mysqli_fetch_array($query)) {
             echo '<option value="'.$valores[id_colaborador].'">'.$valores[nombre_colaborador]." ".$valores[apellido_pat_colaborador].'</option>';
 
 
           }
+
         ?>
                                                 </select>
                                             </td>

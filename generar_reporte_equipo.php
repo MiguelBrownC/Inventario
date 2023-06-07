@@ -28,6 +28,8 @@ include_once "conexion.php";
 		$html .= '<table border="1">';
 
 		$html .= '<tr>';
+        $html .= '<td><b>Rut</b></td>';
+        $html .= '<td><b>Nombre</b></td>';
 		$html .= '<td><b>Serial Equipo</b></td>';
 		$html .= '<td><b>Marca Equipo</b></td>';
 		$html .= '<td><b>Modelo Equipo</b></td>';
@@ -41,21 +43,29 @@ include_once "conexion.php";
 
 		//Seleccionar todos los elementos de la tabla
         $sql = "select
-            e.serial_equipo,
-            m.marca_equipo,
-            mo.modelo_equipo,
-            e.procesador_equipo,
-            e.capacidad_hdd_equipo,
-            e.ram_equipo, te.tipo_equipo,
-            e.valor_equipo,
-            e.fecha_compra_equipo 
-            from equipo e 
-            inner join tipo_equipo te
-            on e.id_tipo_equipo = te.id_tipo_equipo
-            inner join marca_equipo m
-            on e.id_marca = m.id_marca_equipo 
-            inner join modelo_equipo mo
-            on e.id_modelo = mo.id_modelo_equipo where e.status_equipo = 1  order by e.fecha_compra_equipo desc;";
+        col.rut_colaborador,
+        concat_ws(' ',col.nombre_colaborador,
+        col.apellido_pat_colaborador) as 'nombre_completo',
+        e.serial_equipo,
+        m.marca_equipo,
+        mo.modelo_equipo,
+        e.procesador_equipo,
+        e.capacidad_hdd_equipo,
+        e.ram_equipo, te.tipo_equipo,
+        e.valor_equipo,
+        e.fecha_compra_equipo 
+        from equipo e 
+        inner join tipo_equipo te
+        on e.id_tipo_equipo = te.id_tipo_equipo
+        inner join marca_equipo m
+        on e.id_marca = m.id_marca_equipo 
+        inner join modelo_equipo mo
+        on e.id_modelo = mo.id_modelo_equipo 
+        inner join asignacion asi 
+        on e.id_equipo = asi.id_equipo
+        inner join colaborador col
+        on asi.id_colaborador = col.id_colaborador
+        where e.status_equipo = 1  order by col.nombre_colaborador asc;";
 
         $result = $mysqli->query($sql);
 
@@ -63,6 +73,8 @@ include_once "conexion.php";
 
 		while ($row_msg_contatos = mysqli_fetch_assoc($result)) {
 			$html .= '<tr>';
+            $html .= '<td>' . $row_msg_contatos["rut_colaborador"] . '</td>';
+            $html .= '<td>' . $row_msg_contatos["nombre_completo"] . '</td>';
 			$html .= '<td>' . $row_msg_contatos["serial_equipo"] . '</td>';
 			$html .= '<td>' . $row_msg_contatos["marca_equipo"] . '</td>';
 			$html .= '<td>' . $row_msg_contatos["modelo_equipo"] . '</td>';

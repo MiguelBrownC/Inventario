@@ -50,7 +50,8 @@ include_once "conexion.php";
             inner join marca_equipo me
             on me.id_marca_equipo = e.id_marca
             inner join tipo_equipo teq 
-            on teq.id_tipo_equipo = e.id_tipo_equipo;";
+            on teq.id_tipo_equipo = e.id_tipo_equipo
+            order by c.nombre_colaborador asc;";
 
         $result = $mysqli->query($sql);
 
