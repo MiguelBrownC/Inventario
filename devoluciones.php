@@ -7,16 +7,13 @@ if (isset($_SESSION["name"])) {
     include_once "encabezado.php";
 
     $mysqli = include_once "conexion.php";
-    $resultado = $mysqli->query("SELECT c.id_colaborador, c.nombre_colaborador,  c.apellido_pat_colaborador,  c.apellido_mat_colaborador
-        FROM colaborador c
-        INNER JOIN asignacion a ON c.id_colaborador = a.id_colaborador
-        WHERE (SELECT COUNT(*) FROM asignacion) > 0");
+    $resultado = $mysqli->query("select * from colaborador where equipo_colaborador = 1");
 
     $equipos = $resultado->fetch_all(MYSQLI_ASSOC);
 
 ?>
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="es">
 
     <head>
         <meta charset="utf-8" />

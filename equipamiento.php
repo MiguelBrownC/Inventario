@@ -441,22 +441,26 @@ if (isset($_SESSION["name"])) {
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             MODELO</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            PROCESADOR</th>
+                                                            PROCESADOR  </th>
+                                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            </th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             RAM</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             VALOR</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             FECHA COMPRA</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            ADJUNTAR FACTURA</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" <?php
-                                                                                                                                        if ($area == 3) {
-                                                                                                                                            echo 'style="display: none;"';
-                                                                                                                                        } ?>>
+                                                                    if ($area == 3) {
+                                                                        echo 'style="display: none;"';
+                                                                    } ?>>
                                                             EDITAR</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" <?php
-                                                                                                                                        if ($area == 3) {
-                                                                                                                                            echo 'style="display: none;"';
-                                                                                                                                        } ?>>
+                                                                    if ($area == 3) {
+                                                                        echo 'style="display: none;"';
+                                                                    } ?>>
                                                             BAJA</th>
 
                                                     </tr>
@@ -493,7 +497,17 @@ if (isset($_SESSION["name"])) {
                                                                 <small><?php echo $equipo["fecha_compra_equipo"] ?></small>
                                                             </td>
 
-
+                                                            <td class="text-sm">
+                                                                <form action="guardararchivo.php" method="POST" class="form-inline" enctype="multipart/form-data">
+                                                                    <div>
+                                                                        <input type="file" name="archivoPDF">
+                                                                        <!-- <label  for="file">Adjuntar Factura</label> -->
+                                                                    </div>
+                                                                    <div>
+                                                                    <input type="submit" value="Subir Factura">
+                                                                    </div>
+                                                                </form>
+                                                            </td>
 
                                                             <td class="text-sm" <?php
                                                                                 if ($area == 3) {
@@ -524,10 +538,10 @@ if (isset($_SESSION["name"])) {
 
 
                 <!-- Pestaña PCs Torres -->
-                <div id="tabs-2">
+                <div id="tabs-2">notebooks
 
                     <div class="row">
-                        <div class="container-fluid py-4">
+                        <div class="container-notebooksfluid py-4">
                             <div class="col-12">
                                 <div class="card mb-4">
                                     <div class="card-header pb-0">
@@ -748,10 +762,8 @@ if (isset($_SESSION["name"])) {
                                                             <td class="text-sm">
                                                                 <small><?php echo $bam["fecha_compra_equipo"] ?></small>
                                                             </td>
-
                                                             <td class="text-sm">
-
-                                                                <a href="editer_equipo.php?id=<?php echo $bam["id_equipo"] ?>" class="btn btn-warning" role="button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                                <a href="editer_equipo.php?id=<?php echo $celular["id_equipo"] ?>" class="btn btn-warning" role="button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                             </td>
                                                             <td class="text-sm">
                                                                 <a href="eliminar_equipos.php?id=<?php echo $bam["id_equipo"] ?>" class="btn btn-danger" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -926,14 +938,8 @@ if (isset($_SESSION["name"])) {
                     </div>
                 </div>
 
-
-
-
-
-
-                <!-- Pestaña notebooks -->
+                <!-- Pestaña Bajas -->
                 <div id="tabs-7">
-
                     <div class="row">
                         <div class="container-fluid py-4">
                             <div class="col-12">
@@ -974,7 +980,7 @@ if (isset($_SESSION["name"])) {
                                                 </thead>
                                                 <tbody>
 
-                                                    <!-- inicio de tabla notebooks -->
+                                                    <!-- inicio de tabla bajas -->
 
                                                     <?php
                                                     foreach ($bajas as $baja) { ?>
@@ -1003,8 +1009,6 @@ if (isset($_SESSION["name"])) {
                                                             <td class="text-sm">
                                                                 <small><?php echo $baja["fecha_compra_equipo"] ?></small>
                                                             </td>
-
-
 
                                                             <td class="text-sm" <?php
                                                                                 if ($area == 3) {
@@ -1084,6 +1088,7 @@ if (isset($_SESSION["name"])) {
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="assets/js/soft-ui-dashboard.min.js?v=1.0.6"></script>
+        <script src="script.js"></script>
     </body>
 
     </html>

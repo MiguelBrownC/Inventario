@@ -60,7 +60,7 @@ $equipos = $resultado->fetch_all(MYSQLI_ASSOC);
                         <td><?php echo $equipo["tipo_equipo"] ?></td>
                         <td><?php echo $equipo["valor_equipo"] ?></td>
                           <td>
-                            <a href="#" class="btn btn-danger" onclick="equipodevuelto(<?php echo $equipo["id_equipo"].",".$equipo["id_colaborador"] ?>);" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="devoluciones.php" class="btn btn-danger" onclick="equipodevuelto(<?php echo $equipo["id_equipo"].",".$equipo["id_colaborador"] ?>);" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </td>
 
                        
