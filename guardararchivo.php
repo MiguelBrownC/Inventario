@@ -1,31 +1,60 @@
 <?php
-// Verificar si se envió un archivo
-if(isset($_FILES['archivoPDF'])) {
-  // Obtener información del archivo
-  $nombreArchivo = $_FILES['archivoPDF']['name'];
-  $ubicacionArchivo = $_FILES['archivoPDF']['tmp_name'];
-  $serial_equipo = $_GET['serial_equipo']; // falta obtener la serial del equipo desde equipamiento.php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verificar si se ha enviado el formulario por método POST
 
-  // Mover el archivo al directorio deseado en el servidor
-  $directorioDestino = './docs/bills/'; 
-  $rutaArchivo = $directorioDestino . $nombreArchivo;
-  
-  if(move_uploaded_file($ubicacionArchivo, $rutaArchivo)) {
-    
-    // El archivo se ha subido correctamente
-    $mysqli = include_once "conexion.php"; 
-    $rutaArchivo = mysqli_real_escape_string($mysqli, $rutaArchivo); 
+    // Obtener los archivos enviados
+    $archivos = $_FILES['archivoPDF'];
 
-    $query = "UPDATE `wwtimd_inventario_mda`.`equipo` SET `ruta_factura` = '$rutaArchivo' WHERE `serial_equipo` = '$serial_equipo'";
-    echo $query;
-    mysqli_query($mysqli, $query);
-//falta un mensaje de aviso que se subio correctamente el archivo
-    mysqli_close($mysqli);
-    // header('location: equipamiento.php');
-    // mensajeAviso();
-    exit;
-  } else {
-    // Error al subir el archivo
-    echo "Error al subir el archivo PDF.";
-  }
+    // Obtener el texto enviado
+    $serial = $_POST['text'];
+
+    // Verificar si se recibieron archivos
+    if (!empty($archivos['name'])) {
+        // Recorrer los archivos
+        for ($i = 0; $i < count($archivos['name']); $i++) {
+            $fileName = $archivos['name'][$i];
+            $fileTmpName = $archivos['tmp_name'][$i];
+            $fileSize = $archivos['size'][$i];
+            $fileError = $archivos['error'][$i];
+
+            // Verificar si se subió correctamente el archivo actual
+            if ($fileError[$i] === UPLOAD_ERR_OK) {
+                // Obtener el directorio de destino y la ruta del archivo
+                $directorioDestino = './docs/bills/'; 
+                $rutaArchivo = $directorioDestino . $fileName;
+
+                // Mover el archivo a la ubicación final
+                if (move_uploaded_file($fileTmpName[$i], $rutaArchivo)) {
+                    // El archivo se ha subido correctamente
+                    require_once "conexion.php"; 
+
+                    // Escapar caracteres especiales en la ruta del archivo
+                    $rutaArchivo = mysqli_real_escape_string($mysqli, $rutaArchivo); 
+
+                    $query = "UPDATE `wwtimd_inventario_mda`.`equipo` SET `ruta_factura` = '$rutaArchivo' WHERE `serial_equipo` = '$serial'"; 
+                    if (mysqli_query($mysqli, $query)) {
+                        // La actualización se realizó correctamente
+                        // Puedes agregar un mensaje de éxito aquí si lo deseas
+                        mysqli_close($mysqli);
+                    } else {
+                        // Error al ejecutar la consulta de actualización
+                        echo "Error al actualizar la base de datos: " . mysqli_error($mysqli);
+                    }
+                } else {
+                    // Error al mover el archivo
+                    echo "Error al subir el archivo $fileName.";
+                }
+            } else {
+                // Error en la carga del archivo
+                echo "Error al cargar el archivo $fileName. Código de error: $fileError[$i]";
+            }
+        }
+
+        // Redireccionar después de procesar todos los archivos
+        header('Location: equipamiento.php');
+        exit;
+    } else {
+        echo 'No se han enviado archivos.';
+    }
 }
+?>

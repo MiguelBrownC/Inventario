@@ -5,7 +5,7 @@
 	//indica la ruta o direccion del servidor
 	$host = "localhost";
 	//usuario de base de datos
-$usuario = "root";
+$usuario = "inventario";
 	//clave de usuario de base datos
 $contrasenia = "123456";
 	//nombre de la base de datos
