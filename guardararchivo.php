@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Verificar si se subió correctamente el archivo actual
             if ($fileError[$i] === UPLOAD_ERR_OK) {
                 // Obtener el directorio de destino y la ruta del archivo
-                $directorioDestino = './docs/bills/'; 
+                $directorioDestino = './docs/docguardado/'; 
                 $rutaArchivo = $directorioDestino . $fileName;
 
                 // Mover el archivo a la ubicación final

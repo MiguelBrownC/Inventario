@@ -417,7 +417,7 @@ if (isset($_SESSION["name"])) {
                 </ul>
                 <!-- Pestaña notebooks -->
                 <div id="tabs-1">
-
+                <a class="btn btn-success btn-sm" href="generar_reporte_notebook.php">Generar Informe de Notebooks</a>
                     <div class="row">
                         <div class="container-fluid py-4">
                             <div class="col-12">
