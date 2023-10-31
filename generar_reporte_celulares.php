@@ -21,7 +21,7 @@ include_once "conexion.php";
         $dh = $date.' '.$hour;
         
 		// Definimos el archivo exportado
-		$arquivo = 'Reporte Inventario Notebooks '.$dh.'.xls';
+		$arquivo = 'Reporte Inventario Celuares '.$dh.'.xls';
 
 		// Crear la tabla HTML
 		$html = '';
@@ -33,9 +33,7 @@ include_once "conexion.php";
 		$html .= '<td><b>Serial Equipo</b></td>';
 		$html .= '<td><b>Marca Equipo</b></td>';
 		$html .= '<td><b>Modelo Equipo</b></td>';
-		$html .= '<td><b>Procesador Equipo</b></td>';
-		$html .= '<td><b>Capacidad Almacenamieto</b></td>';
-        $html .= '<td><b>Ram</b></td>';
+
         $html .= '<td><b>Valor Equipo</b></td>';
         $html .= '<td><b>Fecha de Compra</b></td>';
         $html .= '<td><b>Fecha ed Asignación</b></td>';
@@ -49,9 +47,6 @@ include_once "conexion.php";
     e.serial_equipo,
     m.marca_equipo,
     mo.modelo_equipo,
-    e.procesador_equipo,
-    e.capacidad_hdd_equipo,
-    e.ram_equipo,
     e.valor_equipo,
     e.fecha_compra_equipo,
     MAX(log.fecha_asignacion) AS 'fecha_asignacion'
@@ -62,7 +57,7 @@ INNER JOIN modelo_equipo mo ON e.id_modelo = mo.id_modelo_equipo
 INNER JOIN asignacion asi ON e.id_equipo = asi.id_equipo
 INNER JOIN colaborador col ON asi.id_colaborador = col.id_colaborador
 INNER JOIN log_asignacion log ON col.id_colaborador = log.id_colaborador
-WHERE e.status_equipo = 1 AND e.id_tipo_equipo = 1
+WHERE e.status_equipo = 1 AND e.id_tipo_equipo = 5
 GROUP BY col.rut_colaborador, col.nombre_colaborador, col.apellido_pat_colaborador, e.serial_equipo, m.marca_equipo, mo.modelo_equipo, e.procesador_equipo, e.capacidad_hdd_equipo, e.ram_equipo, e.valor_equipo, e.fecha_compra_equipo order by col.nombre_colaborador asc ;
         ";
 
@@ -77,9 +72,6 @@ GROUP BY col.rut_colaborador, col.nombre_colaborador, col.apellido_pat_colaborad
 			$html .= '<td>' . $row_msg_contatos["serial_equipo"] . '</td>';
 			$html .= '<td>' . $row_msg_contatos["marca_equipo"] . '</td>';
 			$html .= '<td>' . $row_msg_contatos["modelo_equipo"] . '</td>';
-			$html .= '<td>' . $row_msg_contatos["procesador_equipo"] . '</td>';
-            $html .= '<td>' . $row_msg_contatos["capacidad_hdd_equipo"] . '</td>';
-            $html .= '<td>' . $row_msg_contatos["ram_equipo"] . '</td>';
             $html .= '<td>' . $row_msg_contatos["valor_equipo"] . '</td>';
             $html .= '<td>' . $row_msg_contatos["fecha_compra_equipo"] . '</td>';
             $html .= '<td>' . $row_msg_contatos["fecha_asignacion"] . '</td>';

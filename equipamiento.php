@@ -536,7 +536,8 @@ if (isset($_SESSION["name"])) {
 
 
                 <!-- Pestaña PCs Torres -->
-                <div id="tabs-2">notebooks
+                <div id="tabs-2">
+                <a class="btn btn-success btn-sm" href="generar_reporte_estacionario.php">Generar Informe de PCs Estacionarios</a>
 
                     <div class="row">
                         <div class="container-notebooksfluid py-4">
@@ -629,7 +630,7 @@ if (isset($_SESSION["name"])) {
 
                 <!-- Pestaña celulares -->
                 <div id="tabs-3">
-
+                <a class="btn btn-success btn-sm" href="generar_reporte_celulares.php">Generar Informe de Celulares</a>
                     <div class="row">
                         <div class="container-fluid py-4">
                             <div class="col-12">
